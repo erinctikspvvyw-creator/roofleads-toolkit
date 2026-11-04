@@ -1,0 +1,69 @@
+# Roofing lead list settings. Edit the city list and the caps, then run the same command again.
+# Practice data covers the cities below. If you remove a city, the practice run returns fewer rows.
+
+[discover]
+# Apify actor that searches Google Maps. Personal-data add-ons are always sent as off.
+actor_id = "compass/crawler-google-places"
+# {city} is replaced with each city below. Add another line if you need more companies,
+# for example "roofing contractor {city} TX". Each extra line raises the Apify estimate.
+search_terms = ["roof repair {city} TX"]
+location_template = "{city}, Texas, USA"
+state = "Texas"
+country_code = "us"
+# Upper bound of places requested per search term. The budget reserves this many.
+max_places_per_search = 20
+# withWebsite drops listings that have no site (they cannot be enriched). It is a paid filter.
+website_filter = "withWebsite"
+# Skip closed businesses. This is also a paid filter.
+skip_closed_places = true
+language = "en"
+cities = [
+  "Austin",
+  "Houston",
+  "Dallas",
+  "San Antonio",
+  "Fort Worth",
+  "El Paso",
+  "Arlington",
+  "Corpus Christi",
+  "Plano",
+  "Lubbock",
+  "Laredo",
+  "Irving",
+]
+
+[enrich]
+# Ignore Hunter addresses below this confidence. A missing confidence is kept.
+min_confidence = 50
+# Prefer a company inbox such as info@ or office@ when Hunter lists one.
+prefer_role_emails = true
+
+[verify]
+# When true, role inboxes are marked risky and are not sent to Hunter. Default keeps them
+# if Hunter says the mailbox is deliverable, because small contractors often publish only info@.
+reject_role_accounts = false
+# Optional extra disposable domains, one per line. The built-in starter list is always included.
+disposable_domains_file = ""
+# SMTP probing stays off. Use the --smtp-probe flag only if you accept the risk described in the README.
+smtp_probe = false
+
+[budget]
+# Hard cap on Hunter credits recorded in this cache folder (domain search + verification).
+max_credits = 500
+# Hard cap on estimated Apify dollars recorded in this cache folder.
+max_apify_usd = "5"
+# Planning rates. Change these to match your invoice. They do not change what the vendors charge.
+hunter_usd_per_credit = "0.10"
+hunter_credits_per_domain_search = 1
+hunter_credits_per_verification = 1
+# Apify Google Maps Scraper, free-tier public rates as of 2026.
+apify_usd_per_place = "0.004"
+apify_usd_per_filter = "0.001"
+apify_usd_per_start = "0.00005"
+
+[limits]
+hunter_min_interval_seconds = 0.25
+apify_min_interval_seconds = 1.0
+apify_poll_seconds = 5
+apify_run_timeout_seconds = 600
+max_retries = 4
