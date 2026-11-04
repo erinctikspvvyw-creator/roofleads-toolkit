@@ -1,14 +1,36 @@
+# secrets
 .env
+.env.*
+!.env.example
+*.pem
+credentials*.json
+token*.json
+
+# python
 .venv/
-venv/
 __pycache__/
 *.py[cod]
 .pytest_cache/
 .mypy_cache/
-.ruff_cache/
-.cache/
-out/
-dist/
 *.egg-info/
-.coverage
-htmlcov/
+dist/
+build/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+
+# large / scraped dumps (keep tiny examples only)
+data/raw/
+data/runs/
+*.jsonl
+!examples/**/*.json
+tiktok_*_raw.json
+tiktok_bag_imgs/
+tiktok_video_covers/
+*.webp
+*.mp4
+*.zip
+*.tar.gz
+out/
